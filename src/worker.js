@@ -1,10 +1,9 @@
- 
 import {
-    AutoProcessor,
-    env,
-    RawImage,
-    SamModel,
-    Tensor,
+	AutoProcessor,
+	env,
+	RawImage,
+	SamModel,
+	Tensor,
 } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.14.0';
 
 // Since we will download the model from the Hugging Face Hub, we can skip the local model check
@@ -53,7 +52,6 @@ self.onmessage = async (e) => {
 	if (type === 'reset') {
 		imageInputs = null;
 		imageEmbeddings = null;
-
 	} else if (type === 'segment') {
 		// Start segmenting
 		self.postMessage({ type: 'segment_result', data: 'start' });
@@ -63,7 +61,6 @@ self.onmessage = async (e) => {
 		imageEmbeddings = await model.get_image_embeddings(imageInputs);
 
 		self.postMessage({ type: 'segment_result', data: 'done' });
-
 	} else if (type === 'decode') {
 		const reshaped = imageInputs.reshaped_input_sizes[0];
 		const points = data.map((x) => [x.point[0] * reshaped[1], x.point[1] * reshaped[0]]);
@@ -91,7 +88,6 @@ self.onmessage = async (e) => {
 				scores: outputs.iou_scores.data,
 			},
 		});
-
 	} else {
 		throw new Error(`Unknown message type: ${type}`);
 	}

@@ -16,7 +16,7 @@ const SegmentationAnything = () => {
 	const imageContainerRef = useRef(null);
 
 	useEffect(() => {
-		const worker = new Worker(new URL('./worker.js', import.meta.url));
+		const worker = new Worker(new URL('../../worker.js', import.meta.url), []);
 		workerRef.current = worker;
 
 		worker.onmessage = (e) => {
