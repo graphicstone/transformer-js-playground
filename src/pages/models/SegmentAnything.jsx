@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AutoProcessor, env, RawImage, SamModel, Tensor } from '@xenova/transformers';
+import { Button } from '../../components/ui/button';
+import { Badge } from '../../components/ui/badge';
 
 env.allowLocalModels = false;
 
@@ -263,95 +265,127 @@ const SegmentAnything = () => {
 		image.src = imageDataURI;
 	};
 
+	if (!modelReady) {
+		return (
+			<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center p-8">
+				<div className="text-center">
+					<div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-600 mb-4" />
+					<p className="text-gray-600 font-medium">Loading segmentation model...</p>
+				</div>
+			</div>
+		);
+	}
+
 	return (
-		<div className="flex flex-col items-center p-8">
-			<h1 className="text-2xl mb-4">Segment Anything w/ 🤗 Transformers.js</h1>
-
-			<div
-				ref={containerRef}
-				className="relative w-[640px] h-[420px] max-w-full max-h-full border-2 border-dashed border-gray-300 rounded-xl overflow-hidden cursor-pointer mt-4"
-				style={{
-					backgroundImage: imageDataURI ? `url(${imageDataURI})` : 'none',
-					backgroundSize: '100% 100%',
-					backgroundPosition: 'center',
-					backgroundRepeat: 'no-repeat',
-				}}
-				onMouseDown={handleMouseDown}
-				onMouseMove={handleMouseMove}
-				onContextMenu={(e) => e.preventDefault()}
-			>
-				<canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />
-
-				{!imageDataURI && (
-					<div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-						<button
-							onClick={handleClickUpload}
-							className="flex flex-col items-center focus:outline-none hover:opacity-80"
+		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-8">
+			<div className="max-w-5xl mx-auto">
+				{/* Hero Section */}
+				<div className="text-center mb-12">
+					<Badge variant="purple" className="mb-4">
+						Segmentation
+					</Badge>
+					<h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-4">
+						Segment Anything
+						<span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+							{' '}
+							WebGPU
+						</span>
+					</h1>
+					<p className="text-gray-600 max-w-2xl mx-auto">
+						In-browser segmentation, powered by{' '}
+						<a
+							className="text-purple-600 hover:text-purple-700 font-medium"
+							target="_blank"
+							href="https://github.com/xenova/transformers.js"
+							rel="noreferrer"
 						>
-							<svg width="25" height="25" viewBox="0 0 25 25" fill="none">
-								<path
-									fill="#000"
-									d="M3.5 24.3a3 3 0 0 1-1.9-.8c-.5-.5-.8-1.2-.8-1.9V2.9c0-.7.3-1.3.8-1.9.6-.5 1.2-.7 2-.7h18.6c.7 0 1.3.2 1.9.7.5.6.7 1.2.7 2v18.6c0 .7-.2 1.4-.7 1.9a3 3 0 0 1-2 .8H3.6Zm0-2.7h18.7V2.9H3.5v18.7Zm2.7-2.7h13.3c.3 0 .5 0 .6-.3v-.7l-3.7-5a.6.6 0 0 0-.6-.2c-.2 0-.4 0-.5.3l-3.5 4.6-2.4-3.3a.6.6 0 0 0-.6-.3c-.2 0-.4.1-.5.3l-2.7 3.6c-.1.2-.2.4 0 .7.1.2.3.3.6.3Z"
-								/>
-							</svg>
-							<span className="mt-2">Click to upload image</span>
-						</button>
-						<button
-							onClick={handleExample}
-							className="text-sm text-blue-600 underline mt-1 focus:outline-none hover:opacity-80"
-						>
-							(or try example)
-						</button>
-					</div>
-				)}
+							🤗 Transformers.js
+						</a>
+					</p>
+				</div>
 
-				{points?.map((point, i) => (
+				<div className="flex justify-center mt-4">
 					<div
-						key={i}
-						className="absolute w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 z-20"
+						ref={containerRef}
+						className="relative w-[640px] h-[420px] max-w-full max-h-full border-2 border-dashed border-gray-300 rounded-xl overflow-hidden cursor-pointer"
 						style={{
-							left: `${point.point[0] * 100}%`,
-							top: `${point.point[1] * 100}%`,
-							backgroundImage: `url(${point.label === 1 ? '/star-icon.png' : '/cross-icon.png'})`,
-							backgroundSize: 'contain',
+							backgroundImage: imageDataURI ? `url(${imageDataURI})` : 'none',
+							backgroundSize: '100% 100%',
+							backgroundPosition: 'center',
+							backgroundRepeat: 'no-repeat',
 						}}
-					/>
-				))}
+						onMouseDown={handleMouseDown}
+						onMouseMove={handleMouseMove}
+						onContextMenu={(e) => e.preventDefault()}
+					>
+						<canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />
+
+						{!imageDataURI && (
+							<div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+								<button
+									onClick={handleClickUpload}
+									className="flex flex-col items-center focus:outline-none hover:opacity-80"
+								>
+									<svg width="25" height="25" viewBox="0 0 25 25" fill="none">
+										<path
+											fill="#000"
+											d="M3.5 24.3a3 3 0 0 1-1.9-.8c-.5-.5-.8-1.2-.8-1.9V2.9c0-.7.3-1.3.8-1.9.6-.5 1.2-.7 2-.7h18.6c.7 0 1.3.2 1.9.7.5.6.7 1.2.7 2v18.6c0 .7-.2 1.4-.7 1.9a3 3 0 0 1-2 .8H3.6Zm0-2.7h18.7V2.9H3.5v18.7Zm2.7-2.7h13.3c.3 0 .5 0 .6-.3v-.7l-3.7-5a.6.6 0 0 0-.6-.2c-.2 0-.4 0-.5.3l-3.5 4.6-2.4-3.3a.6.6 0 0 0-.6-.3c-.2 0-.4.1-.5.3l-2.7 3.6c-.1.2-.2.4 0 .7.1.2.3.3.6.3Z"
+										/>
+									</svg>
+									<span className="mt-2">Click to upload image</span>
+								</button>
+								<button
+									onClick={handleExample}
+									className="text-sm text-blue-600 underline mt-1 focus:outline-none hover:opacity-80"
+								>
+									(or try example)
+								</button>
+							</div>
+						)}
+
+						{points?.map((point, i) => (
+							<div
+								key={i}
+								className="absolute w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 z-20"
+								style={{
+									left: `${point.point[0] * 100}%`,
+									top: `${point.point[1] * 100}%`,
+									backgroundImage: `url(${point.label === 1 ? '/star-icon.png' : '/cross-icon.png'})`,
+									backgroundSize: 'contain',
+								}}
+							/>
+						))}
+					</div>
+				</div>
+
+				{/* Status and Controls */}
+				<div className="text-sm min-h-[16px] my-2 text-center">{status}</div>
+
+				<div className="flex justify-center space-x-2">
+					<Button onClick={handleReset} variant="default" size="sm">
+						Reset image
+					</Button>
+					<Button onClick={clearPointsAndMask} variant="default" size="sm">
+						Clear points
+					</Button>
+					<Button
+						onClick={handleCutMask}
+						disabled={!isEncoded || !points}
+						variant="default"
+						size="sm"
+					>
+						Cut mask
+					</Button>
+				</div>
+
+				<input
+					ref={fileInputRef}
+					type="file"
+					accept="image/*"
+					onChange={handleFileUpload}
+					className="hidden"
+				/>
 			</div>
-
-			<div className="text-sm min-h-[16px] my-2">{status}</div>
-
-			<div className="space-x-2">
-				<button
-					onClick={handleReset}
-					className="px-3 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 disabled:text-gray-600"
-				>
-					Reset image
-				</button>
-				<button
-					onClick={clearPointsAndMask}
-					className="px-3 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 disabled:text-gray-600"
-				>
-					Clear points
-				</button>
-				<button
-					onClick={handleCutMask}
-					disabled={!isEncoded || !points}
-					className="px-3 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 disabled:text-gray-600"
-				>
-					Cut mask
-				</button>
-			</div>
-
-			<p className="mt-1 text-sm">Left click = positive points, right click = negative points.</p>
-
-			<input
-				ref={fileInputRef}
-				type="file"
-				accept="image/*"
-				onChange={handleFileUpload}
-				className="hidden"
-			/>
 		</div>
 	);
 };
