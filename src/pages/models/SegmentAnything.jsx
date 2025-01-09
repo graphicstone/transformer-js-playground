@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AutoProcessor, env, RawImage, SamModel, Tensor } from '@xenova/transformers';
 
 env.allowLocalModels = false;
@@ -41,7 +41,13 @@ const SegmentAnything = () => {
 			}
 		};
 
-		initModel();
+		initModel()
+			.then(() => {
+				console.log('Model loaded');
+			})
+			.catch((error) => {
+				console.error('Model loading error:', error);
+			});
 	}, []);
 
 	const handleFileUpload = async (e) => {
@@ -89,14 +95,13 @@ const SegmentAnything = () => {
 		}
 	};
 
-	const handleDecode = async () => {
+	const handleDecode = useCallback(async () => {
 		if (!points || isDecoding || !isEncoded) return;
 
 		setIsDecoding(true);
 		const reshaped = imageInputsRef.current.reshaped_input_sizes[0];
 
 		const pointCoords = points.map((x) => [x.point[0] * reshaped[1], x.point[1] * reshaped[0]]);
-
 		const labels = points.map((x) => BigInt(x.label));
 
 		const input_points = new Tensor('float32', pointCoords.flat(Infinity), [
@@ -127,7 +132,19 @@ const SegmentAnything = () => {
 		} finally {
 			setIsDecoding(false);
 		}
-	};
+	}, [points, isDecoding, isEncoded, imageInputsRef, modelRef, processorRef]);
+
+	useEffect(() => {
+		if (points) {
+			handleDecode()
+				.then(() => {
+					console.log('Decoding done');
+				})
+				.catch((error) => {
+					console.error('Decoding error:', error);
+				});
+		}
+	}, [handleDecode, points]);
 
 	const drawMask = (mask, scores) => {
 		const canvas = canvasRef.current;
@@ -204,12 +221,6 @@ const SegmentAnything = () => {
 		clearPointsAndMask();
 		setStatus('Ready');
 	};
-
-	useEffect(() => {
-		if (points) {
-			handleDecode();
-		}
-	}, [handleDecode, points]);
 
 	const handleCutMask = async () => {
 		const canvas = canvasRef.current;
