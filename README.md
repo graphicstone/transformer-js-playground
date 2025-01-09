@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# Transformer.js Playground
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Transformer.js Playground! This project is a browser-based application that leverages the power of machine learning models directly in your browser using [Transformer.js](https://huggingface.co/docs/transformers.js). It provides a variety of models for text and image processing tasks, all running client-side without the need for a server.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Available Models](#available-models)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Text Classification**: Analyze and classify text with state-of-the-art models.
+- **Text Generation**: Generate human-like text for various applications.
+- **Image Segmentation**: Advanced image processing and segmentation tools.
+- **Background Removal**: Remove backgrounds from images using WebGPU.
+- **Smart Eraser**: Erase objects from images with precision.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+To get started with the Transformer.js Playground, follow these steps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the repository**:
 
-### `npm run build`
+   ```bash
+   git clone https://github.com/your-username/transformer-js-playground.git
+   cd transformer-js-playground
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install dependencies**:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Start the development server**:
 
-### `npm run eject`
+   ```bash
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   This will launch the application in your default web browser.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Once the application is running, you can explore different models and their capabilities. Navigate through the app using the provided links to access various models for text and image processing.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Running Models
 
-## Learn More
+- **Text Models**: Enter your text input and run the model to see the results.
+- **Image Models**: Upload an image and apply the model to see the output.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Available Models
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Text Models
 
-### Code Splitting
+- **Sentiment Analysis**: Analyze the emotional tone of text.
+- **Text Generation**: Generate text based on a given prompt.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Image Models
 
-### Analyzing the Bundle Size
+- **Face Parsing**: Parse facial features from images.
+- **Segment Anything**: Segment objects from images.
+- **Remove Background**: Remove backgrounds from images.
+- **Smart Eraser**: Erase objects from images.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Development
 
-### Making a Progressive Web App
+To contribute to the development of this project, follow these steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. **Fork the repository**.
+2. **Create a new branch** for your feature or bug fix:
 
-### Advanced Configuration
+   ```bash
+   git checkout -b feature-name
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. **Make your changes** and commit them:
 
-### Deployment
+   ```bash
+   git commit -m "Description of changes"
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+4. **Push to your fork**:
 
-### `npm run build` fails to minify
+   ```bash
+   git push origin feature-name
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. **Create a pull request** to the main repository.
+
+## Contributing
+
+Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) for more information.
+
+## License
+
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+Enjoy exploring the capabilities of Transformer.js directly in your browser!
