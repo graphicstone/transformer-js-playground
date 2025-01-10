@@ -309,7 +309,7 @@ export default function RemoveBackground() {
 						>
 							<img
 								src={processedImages[index] || src}
-								alt={`Image ${index + 1}`}
+								alt={`${index + 1}`}
 								className="object-cover w-full h-48"
 							/>
 							{processedImages[index] && (
